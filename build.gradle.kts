@@ -36,6 +36,9 @@ repositories {
 }
 
 tasks.jar {
+
+  duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
   manifest {
     attributes["Main-Class"] = "${fullPack}.${buildProps["app.main-class"]}"
     attributes["Implementation-Title"] = buildProps["project.name"]
@@ -45,14 +48,16 @@ tasks.jar {
   from(configurations.runtimeClasspath.get().map {
     println("  " + it.name)
 
-    if (it.isDirectory) it else zipTree(it).matching {
+    if (it.isDirectory && !it.name.contains("META-INF")) {
+      it
+    } else zipTree(it).matching {
       exclude { f ->
         val name = f.name.toLowerCase()
         (name.contains("log4j") && name.contains(".dat")) ||
           name.endsWith(".sf") ||
           name.endsWith(".dsa") ||
           name.endsWith(".rsa")
-      } } })
+    } } })
   archiveFileName.set("service.jar")
 }
 
