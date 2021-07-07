@@ -3,7 +3,7 @@
 #   Build Service & Dependencies
 #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-FROM veupathdb/alpine-dev-base:latest AS prep
+FROM veupathdb/alpine-dev-base:jdk-16 AS prep
 
 ARG GITHUB_USERNAME
 ARG GITHUB_TOKEN
