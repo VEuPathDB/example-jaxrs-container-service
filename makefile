@@ -1,6 +1,4 @@
 APP_PACKAGE  := $(shell ./gradlew -q print-package | tail -1)
-MAIN_DIR     := src/main/java/$(shell echo $(APP_PACKAGE) | sed 's/\./\//g')
-TEST_DIR     := $(shell echo $(MAIN_DIR) | sed 's/main/test/')
 BIN_DIR      := .tools/bin
 
 C_BLUE := "\\033[94m"
@@ -104,7 +102,7 @@ clean:
 
 .PHONY: compile
 compile: install-dev-env raml-gen-code
-	@./gradlew clean compile
+	@./gradlew clean compileJava
 
 .PHONY: test
 test: install-dev-env raml-gen-code
