@@ -41,7 +41,7 @@ RUN make jar
 #   Run the service
 #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-FROM foxcapades/alpine-oracle:1.6
+FROM amazoncorretto:17-alpine3.15-jdk
 
 LABEL service="demo-service"
 
