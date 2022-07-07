@@ -41,7 +41,7 @@ RUN make jar
 #   Run the service
 #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-FROM amazoncorretto:17-alpine3.15-jdk
+FROM alpine:3.16
 
 LABEL service="demo-service"
 
