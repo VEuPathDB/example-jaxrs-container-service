@@ -20,6 +20,4 @@ public class HelloPostResponseStream extends HelloPostResponseImpl implements St
   public void write(OutputStream output) throws IOException, WebApplicationException {
     _streamer.accept(output);
   }
-
 }
-
