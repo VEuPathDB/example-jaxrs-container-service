@@ -84,18 +84,18 @@ repositories {
 dependencies {
 
   // Core lib
-  implementation("org.veupathdb.lib:jaxrs-container-core:6.9.1")
+  implementation("org.veupathdb.lib:jaxrs-container-core:6.10.0")
 
   // Jersey
-  implementation("org.glassfish.jersey.core:jersey-server:3.0.6")
+  implementation("org.glassfish.jersey.core:jersey-server:3.0.8")
 
   // Jackson
-  implementation("com.fasterxml.jackson.core:jackson-databind:2.13.3")
-  implementation("com.fasterxml.jackson.core:jackson-annotations:2.13.3")
+  implementation("com.fasterxml.jackson.core:jackson-databind:2.13.4")
+  implementation("com.fasterxml.jackson.core:jackson-annotations:2.13.4")
 
   // Log4J
-  implementation("org.apache.logging.log4j:log4j-api:2.18.0")
-  implementation("org.apache.logging.log4j:log4j-core:2.18.0")
+  implementation("org.apache.logging.log4j:log4j-api:2.19.0")
+  implementation("org.apache.logging.log4j:log4j-core:2.19.0")
 
   // Metrics (can remove if not adding custom service metrics over those provided by container core)
   implementation("io.prometheus:simpleclient:0.16.0")
@@ -103,6 +103,6 @@ dependencies {
 
   // Unit Testing
   testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.0")
-  testImplementation("org.mockito:mockito-core:4.7.0")
+  testImplementation("org.mockito:mockito-core:4.8.0")
   testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.0")
 }
