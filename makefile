@@ -8,7 +8,8 @@ install-dev-env:
 
 .PHONY: clean
 clean:
-	@rm -rf .bin .gradle .tools build vendor
+	@./gradlew clean
+	@rm -rf .gradle
 
 #
 # Build & Test Targets
