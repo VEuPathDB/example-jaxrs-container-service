@@ -2,7 +2,7 @@ import org.veupathdb.lib.gradle.container.util.Logger.Level
 
 plugins {
   java
-  id("org.veupathdb.lib.gradle.container.container-utils") version "4.5.3"
+  id("org.veupathdb.lib.gradle.container.container-utils") version "4.6.0"
   id("com.github.johnrengelman.shadow") version "7.1.2"
 }
 
@@ -84,14 +84,14 @@ repositories {
 dependencies {
 
   // Core lib
-  implementation("org.veupathdb.lib:jaxrs-container-core:6.10.1")
+  implementation("org.veupathdb.lib:jaxrs-container-core:6.13.0")
 
   // Jersey
-  implementation("org.glassfish.jersey.core:jersey-server:3.0.8")
+  implementation("org.glassfish.jersey.core:jersey-server:3.1.0")
 
   // Jackson
-  implementation("com.fasterxml.jackson.core:jackson-databind:2.13.4")
-  implementation("com.fasterxml.jackson.core:jackson-annotations:2.13.4")
+  implementation("com.fasterxml.jackson.core:jackson-databind:2.14.0")
+  implementation("com.fasterxml.jackson.core:jackson-annotations:2.14.0")
 
   // Log4J
   implementation("org.apache.logging.log4j:log4j-api:2.19.0")
