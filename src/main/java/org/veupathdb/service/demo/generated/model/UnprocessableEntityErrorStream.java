@@ -8,11 +8,11 @@ import java.util.function.Consumer;
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.StreamingOutput;
 
-public class HelloResponseStream extends HelloResponseImpl implements StreamingOutput {
+public class UnprocessableEntityErrorStream extends UnprocessableEntityErrorImpl implements StreamingOutput {
 
   private final Consumer<OutputStream> _streamer;
 
-  public HelloResponseStream(Consumer<OutputStream> streamer) {
+  public UnprocessableEntityErrorStream(Consumer<OutputStream> streamer) {
     _streamer = streamer;
   }
 

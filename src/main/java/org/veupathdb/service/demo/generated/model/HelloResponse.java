@@ -28,6 +28,5 @@ public interface HelloResponse {
     GreetingType(String name) {
       this.name = name;
     }
-    public String getValue(){ return name; } 
-}
+  }
 }

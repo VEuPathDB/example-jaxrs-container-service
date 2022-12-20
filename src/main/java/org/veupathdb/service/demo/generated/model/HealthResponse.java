@@ -41,18 +41,17 @@ public interface HealthResponse {
     StatusType(String name) {
       this.name = name;
     }
-    public String getValue(){ return name; } 
-}
+  }
 
   @JsonDeserialize(
       as = HealthResponseImpl.InfoTypeImpl.class
   )
   interface InfoType {
     @JsonProperty("threads")
-    Integer getThreads();
+    int getThreads();
 
     @JsonProperty("threads")
-    void setThreads(Integer threads);
+    void setThreads(int threads);
 
     @JsonProperty("uptime")
     String getUptime();
@@ -61,10 +60,10 @@ public interface HealthResponse {
     void setUptime(String uptime);
 
     @JsonProperty("uptimeMillis")
-    Long getUptimeMillis();
+    long getUptimeMillis();
 
     @JsonProperty("uptimeMillis")
-    void setUptimeMillis(Long uptimeMillis);
+    void setUptimeMillis(long uptimeMillis);
 
     @JsonAnyGetter
     Map<String, Object> getAdditionalProperties();

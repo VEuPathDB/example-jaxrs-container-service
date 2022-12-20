@@ -2,7 +2,7 @@ import org.veupathdb.lib.gradle.container.util.Logger.Level
 
 plugins {
   java
-  id("org.veupathdb.lib.gradle.container.container-utils") version "3.4.3"
+  id("org.veupathdb.lib.gradle.container.container-utils") version "4.5.3"
   id("com.github.johnrengelman.shadow") version "7.1.2"
 }
 
@@ -84,25 +84,25 @@ repositories {
 dependencies {
 
   // Core lib
-  implementation("org.veupathdb.lib:jaxrs-container-core:6.7.4")
+  implementation("org.veupathdb.lib:jaxrs-container-core:6.10.1")
 
   // Jersey
-  implementation("org.glassfish.jersey.core:jersey-server:3.0.4")
+  implementation("org.glassfish.jersey.core:jersey-server:3.0.8")
 
   // Jackson
-  implementation("com.fasterxml.jackson.core:jackson-databind:2.13.3")
-  implementation("com.fasterxml.jackson.core:jackson-annotations:2.13.3")
+  implementation("com.fasterxml.jackson.core:jackson-databind:2.13.4")
+  implementation("com.fasterxml.jackson.core:jackson-annotations:2.13.4")
 
   // Log4J
-  implementation("org.apache.logging.log4j:log4j-api:2.17.2")
-  implementation("org.apache.logging.log4j:log4j-core:2.17.2")
+  implementation("org.apache.logging.log4j:log4j-api:2.19.0")
+  implementation("org.apache.logging.log4j:log4j-core:2.19.0")
 
   // Metrics (can remove if not adding custom service metrics over those provided by container core)
-  implementation("io.prometheus:simpleclient:0.15.0")
-  implementation("io.prometheus:simpleclient_common:0.15.0")
+  implementation("io.prometheus:simpleclient:0.16.0")
+  implementation("io.prometheus:simpleclient_common:0.16.0")
 
   // Unit Testing
-  testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
-  testImplementation("org.mockito:mockito-core:4.6.1")
-  testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.2")
+  testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.0")
+  testImplementation("org.mockito:mockito-core:4.8.0")
+  testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.0")
 }
