@@ -5,7 +5,7 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 FROM veupathdb/alpine-dev-base:jdk-17 AS prep
 
-LABEL service="demo-service"
+LABEL service="demo-service-build"
 
 ARG GITHUB_USERNAME
 ARG GITHUB_TOKEN
