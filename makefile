@@ -9,7 +9,19 @@ install-dev-env:
 .PHONY: clean
 clean:
 	@./gradlew clean
-	@rm -rf .gradle
+	@rm -rf .bin .gradle
+
+#
+# Code & Doc Generation
+#
+
+.PHONY: raml-gen-code
+raml-gen-code:
+	./gradlew generate-jaxrs
+
+.PHONY: raml-gen-docs
+raml-gen-docs:
+	./gradlew generate-raml-docs
 
 #
 # Build & Test Targets
@@ -29,18 +41,6 @@ jar: build/libs/service.jar
 .PHONY: docker
 docker:
 	./gradlew build-docker --stacktrace
-
-#
-# Code & Doc Generation
-#
-
-.PHONY: raml-gen-code
-raml-gen-code:
-	./gradlew generate-jaxrs
-
-.PHONY: raml-gen-docs
-raml-gen-docs:
-	./gradlew generate-raml-docs
 
 #
 # File based targets

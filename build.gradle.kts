@@ -2,7 +2,7 @@ import org.veupathdb.lib.gradle.container.util.Logger.Level
 
 plugins {
   java
-  id("org.veupathdb.lib.gradle.container.container-utils") version "4.6.0"
+  id("org.veupathdb.lib.gradle.container.container-utils") version "4.7.1"
   id("com.github.johnrengelman.shadow") version "7.1.2"
 }
 
@@ -84,7 +84,7 @@ repositories {
 dependencies {
 
   // Core lib
-  implementation("org.veupathdb.lib:jaxrs-container-core:6.13.0")
+  implementation("org.veupathdb.lib:jaxrs-container-core:6.13.2")
 
   // Jersey
   implementation("org.glassfish.jersey.core:jersey-server:3.1.0")
@@ -103,6 +103,6 @@ dependencies {
 
   // Unit Testing
   testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.0")
-  testImplementation("org.mockito:mockito-core:4.8.0")
+  testImplementation("org.mockito:mockito-core:4.11.0")
   testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.0")
 }
