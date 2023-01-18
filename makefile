@@ -2,6 +2,9 @@
 # Help/Usage
 #
 
+C_BLUE := "\\033[94m"
+C_NONE := "\\033[0m"
+
 .PHONY: default
 default:
 	@echo "Please choose one of:"
