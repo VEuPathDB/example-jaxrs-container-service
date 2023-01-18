@@ -2,7 +2,7 @@ import org.veupathdb.lib.gradle.container.util.Logger.Level
 
 plugins {
   java
-  id("org.veupathdb.lib.gradle.container.container-utils") version "4.7.1"
+  id("org.veupathdb.lib.gradle.container.container-utils") version "4.7.3"
   id("com.github.johnrengelman.shadow") version "7.1.2"
 }
 
@@ -45,6 +45,7 @@ containerBuild {
 
   }
 
+  /* Uncomment for custom generation options; can be removed in most projects
   generateJaxRS {
     // List of custom arguments to use in the jax-rs code generation command
     // execution.
@@ -54,7 +55,7 @@ containerBuild {
     // command execution.
     environment = mapOf(/*Pair("env-key", "env-val"), Pair("env-key", "env-val")*/)
   }
-
+  */
 }
 
 java {
@@ -79,6 +80,11 @@ repositories {
       password = if (extra.has("gpr.key")) extra["gpr.key"] as String? else System.getenv("GITHUB_TOKEN")
     }
   }
+}
+
+// ensures changing modules are never cached
+configurations.all {
+  resolutionStrategy.cacheChangingModulesFor(0, TimeUnit.SECONDS)
 }
 
 dependencies {
