@@ -2,7 +2,7 @@ import org.veupathdb.lib.gradle.container.util.Logger.Level
 
 plugins {
   java
-  id("org.veupathdb.lib.gradle.container.container-utils") version "4.7.3"
+  id("org.veupathdb.lib.gradle.container.container-utils") version "4.8.2"
   id("com.github.johnrengelman.shadow") version "7.1.2"
 }
 
@@ -44,18 +44,6 @@ containerBuild {
     imageName = "example-service"
 
   }
-
-  /* Uncomment for custom generation options; can be removed in most projects
-  generateJaxRS {
-    // List of custom arguments to use in the jax-rs code generation command
-    // execution.
-    arguments = listOf(/*arg1, arg2, arg3*/)
-
-    // Map of custom environment variables to set for the jax-rs code generation
-    // command execution.
-    environment = mapOf(/*Pair("env-key", "env-val"), Pair("env-key", "env-val")*/)
-  }
-  */
 }
 
 java {
@@ -82,15 +70,18 @@ repositories {
   }
 }
 
-// ensures changing modules are never cached
+// ensures changing and dynamic modules are never cached
 configurations.all {
-  resolutionStrategy.cacheChangingModulesFor(0, TimeUnit.SECONDS)
+  resolutionStrategy {
+    cacheChangingModulesFor(0, TimeUnit.SECONDS)
+    cacheDynamicVersionsFor(0, TimeUnit.SECONDS)
+  }
 }
 
 dependencies {
 
   // Core lib
-  implementation("org.veupathdb.lib:jaxrs-container-core:6.13.2")
+  implementation("org.veupathdb.lib:jaxrs-container-core:6.14.2")
 
   // Jersey
   implementation("org.glassfish.jersey.core:jersey-server:3.1.0")

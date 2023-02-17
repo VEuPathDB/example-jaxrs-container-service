@@ -23,10 +23,14 @@ public interface HelloResponse {
     @JsonProperty("Hello World")
     HELLOWORLD("Hello World");
 
-    private String name;
+    private final String value;
+
+    public String getValue() {
+      return this.value;
+    }
 
     GreetingType(String name) {
-      this.name = name;
+      this.value = name;
     }
   }
 }

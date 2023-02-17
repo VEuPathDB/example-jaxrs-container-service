@@ -12,4 +12,10 @@ public interface HelloPostRequest {
 
   @JsonProperty("greet")
   void setGreet(String greet);
+
+  @JsonProperty("config")
+  Object getConfig();
+
+  @JsonProperty("config")
+  void setConfig(Object config);
 }
