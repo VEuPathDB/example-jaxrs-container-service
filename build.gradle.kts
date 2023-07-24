@@ -81,14 +81,14 @@ configurations.all {
 dependencies {
 
   // Core lib
-  implementation("org.veupathdb.lib:jaxrs-container-core:6.14.4")
+  implementation("org.veupathdb.lib:jaxrs-container-core:6.15.1")
 
   // Jersey
   implementation("org.glassfish.jersey.core:jersey-server:3.1.1")
 
   // Jackson
-  implementation("com.fasterxml.jackson.core:jackson-databind:2.14.2")
-  implementation("com.fasterxml.jackson.core:jackson-annotations:2.14.2")
+  implementation("com.fasterxml.jackson.core:jackson-databind:2.15.1")
+  implementation("com.fasterxml.jackson.core:jackson-annotations:2.15.1")
 
   // Log4J
   implementation("org.apache.logging.log4j:log4j-api:2.20.0")
