@@ -16,7 +16,7 @@ containerBuild {
   project {
 
     // Project Name
-    name = "demo-service"
+    name = "example-service"
 
     // Project Group
     group = "org.veupathdb.service"
@@ -81,7 +81,7 @@ configurations.all {
 dependencies {
 
   // Core lib
-  implementation("org.veupathdb.lib:jaxrs-container-core:6.21.0-alpha2")
+  implementation("org.veupathdb.lib:jaxrs-container-core:6.21.0-alpha4")
 
   // Jersey
   implementation("org.glassfish.jersey.core:jersey-server:3.1.1")

@@ -1,0 +1,82 @@
+version: "3.5"
+
+services:
+  # Definition of a single container in this stack.
+  #
+  # The name "example" will be the address other containers in the stack use to
+  # connect to this service using the internal docker network (http://example).
+  #
+  # Each container in the Docker compose stack will need a service entry.
+  example:
+    # The "image" field tells which image to use for this container; in this
+    # case, it does not have a group prefix since the example service is only
+    # built locally.
+    image: example-service:latest
+
+    # Configure this service to be accessible via the external traefik network.
+    # See "networks" below.
+    networks:
+      - traefik
+
+    # The "environment" field defines a map of environment variables that will
+    # be passed to the service container on startup.
+    #
+    # Fields that do not have a value or default value provided here will be
+    # required on docker-compose startup.
+    environment:
+
+      # The port this service will bind to in its own container.
+      SERVER_PORT: ${EXAMPLE_SERVER_PORT:-8080}
+
+      # A comma separated list of LDAP servers this service should hit to fetch
+      # connection details for the configured database(s).
+      #
+      # Each entry should include address and port (ldap.somehost.com:386).
+      LDAP_SERVER: ${LDAP_SERVER}
+
+      # Base context to use when attempting to resolve the given DB TNS.
+      #
+      # Example: ou=Something,dc=Domain,dc=Component
+      #
+      # The correct value for this can be found in the project wiki page titled
+      # LdapTnsNames.
+      ORACLE_BASE_DN: ${ORACLE_BASE_DN}
+
+      # LDAP Net Service Name for the account database
+      ACCT_DB_TNS_NAME: ${ACCT_DB_TNS_NAME}
+
+      # Account DB login username
+      ACCT_DB_USER: ${ACCT_DB_USER}
+
+      # Account DB login password
+      ACCT_DB_PASS: ${ACCT_DB_PASS}
+
+      # Connection pool size for account database
+      ACCT_DB_POOL_SIZE: ${ACCT_DB_POOL_SIZE:-3}
+
+      # Auth Secret (needed along with user/acct DBs for legacy auth)
+      AUTH_SECRET_KEY: ${AUTH_SECRET_KEY}
+
+      # Admin Auth Token (special value used to access admin endpoints on this service)
+      ADMIN_AUTH_TOKEN: ${ADMIN_AUTH_TOKEN}
+
+    # The labels section defines additional metadata used by ops tooling to
+    # assist in managing this service.
+    #
+    # In these entries "example" would be replaced with a short name or
+    # abbreviation identifying your service.  For example, the dataset accesss
+    # service is "das".
+    labels:
+      - "prometheus.scrape_enabled=true"
+      - "com.centurylinklabs.watchtower.enable=${DATA_WATCHTOWER:-false}"
+      - "traefik.http.services.${TRAEFIK_DATA_ROUTER:-example-dev}.loadbalancer.server.port=${EXAMPLE_SERVER_PORT:-8080}"
+      - "traefik.http.routers.${TRAEFIK_DATA_ROUTER:-example-dev}.rule=Host(`${TRAEFIK_DATA_HOST:-example-dev.local.apidb.org}`)"
+      - "traefik.http.routers.${TRAEFIK_DATA_ROUTER:-example-dev}.tls=true"
+      - "traefik.http.routers.${TRAEFIK_DATA_ROUTER:-example-dev}.entrypoints=${TRAEFIK_ENTRYPOINTS:-local}"
+      - "traefik.docker.network=traefik"
+
+# This defines the existence of the traefik network external to this
+# docker-compose stack.
+networks:
+  traefik:
+    external: true

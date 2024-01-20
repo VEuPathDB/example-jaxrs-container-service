@@ -60,17 +60,18 @@ public class HelloWorld implements Hello {
 
     // demonstrate how to handle unknown request property types
     Object config = entity.getConfig();
-    LOG.info("config object is " + config.getClass().getName());
-    if (config instanceof List<?> list) {
-      for (int i = 0; i < list.size(); i++) {
-        LOG.info("config[" + i + "] is " + list.get(i).getClass().getName());
-      }
-    }
-    else if (config instanceof Map<?,?> map) {
-      int i = 0;
-      for (Map.Entry<?,?> entry : map.entrySet()) {
-        LOG.info("config entry " + i + ": key is " + entry.getKey().getClass().getName() + ", value is " + entry.getValue().getClass().getName());
-        i++;
+    if (config != null) {
+      LOG.info("config object is " + config.getClass().getName());
+      if (config instanceof List<?> list) {
+        for (int i = 0; i < list.size(); i++) {
+          LOG.info("config[" + i + "] is " + list.get(i).getClass().getName());
+        }
+      } else if (config instanceof Map<?, ?> map) {
+        int i = 0;
+        for (Map.Entry<?, ?> entry : map.entrySet()) {
+          LOG.info("config entry " + i + ": key is " + entry.getKey().getClass().getName() + ", value is " + entry.getValue().getClass().getName());
+          i++;
+        }
       }
     }
 
