@@ -14,6 +14,7 @@ import org.veupathdb.service.demo.generated.resources.Hello;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Random;
 import java.util.function.Function;
 
@@ -48,7 +49,7 @@ public class HelloWorld implements Hello {
   }
 
   @Override
-  @Authenticated(adminOverride = Authenticated.AdminOverrideOption.ALLOW_WITH_USER)
+  @Authenticated(adminOverride = Authenticated.AdminOverrideOption.ALLOW_ALWAYS)
   public PostHelloUserOverrideResponse postHelloUserOverride(HelloPostRequest entity) {
     return handleHello(entity,
         PostHelloUserOverrideResponse::respond200WithApplicationJson,
@@ -57,6 +58,10 @@ public class HelloWorld implements Hello {
 
   private <T> T handleHello(HelloPostRequest entity,
     Function<HelloPostResponse,T> successResponse, Function<ServerError,T> errorResponse) {
+
+    // find the person to be greeted
+    String target = Optional.ofNullable(entity.getGreet()).orElse("World");
+    String sender = UserProvider.lookupUser(req).map(User::getFirstName).orElse("God");
 
     // demonstrate how to handle unknown request property types
     Object config = entity.getConfig();
@@ -79,14 +84,12 @@ public class HelloWorld implements Hello {
     var rand = new Random();
     if (rand.nextInt(4) == 2) {
       var out = new ServerErrorImpl();
-      out.setMessage("Whoops!");
+      out.setMessage("Whoops!  Occasionally we throw an error for fun.  Please try again.");
       return errorResponse.apply(out);
     }
 
     var out = new HelloPostResponseImpl();
-    out.setMessage(String.format("Hello %s!", UserProvider.lookupUser(req)
-      .map(User::getFirstName)
-      .orElse("you")));
+    out.setMessage(String.format("Hello %s from %s!", target, sender));
     return successResponse.apply(out);
 
   }
