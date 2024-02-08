@@ -16,7 +16,7 @@ containerBuild {
   project {
 
     // Project Name
-    name = "demo-service"
+    name = "example-service"
 
     // Project Group
     group = "org.veupathdb.service"
