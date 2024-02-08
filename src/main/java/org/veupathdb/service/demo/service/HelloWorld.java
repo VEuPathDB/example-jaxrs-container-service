@@ -1,27 +1,27 @@
 package org.veupathdb.service.demo.service;
 
 import jakarta.ws.rs.core.Context;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.glassfish.jersey.server.ContainerRequest;
 import org.veupathdb.lib.container.jaxrs.model.User;
 import org.veupathdb.lib.container.jaxrs.providers.UserProvider;
+import org.veupathdb.lib.container.jaxrs.server.annotations.AdminRequired;
 import org.veupathdb.lib.container.jaxrs.server.annotations.Authenticated;
-import org.veupathdb.service.demo.generated.model.HelloPostRequest;
-import org.veupathdb.service.demo.generated.model.HelloPostResponseImpl;
+import org.veupathdb.service.demo.generated.model.*;
 import org.veupathdb.service.demo.generated.model.HelloResponse.GreetingType;
-import org.veupathdb.service.demo.generated.model.HelloResponseImpl;
-import org.veupathdb.service.demo.generated.model.ServerErrorImpl;
 import org.veupathdb.service.demo.generated.resources.Hello;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Random;
+import java.util.function.Function;
 
 public class HelloWorld implements Hello {
 
   private static final Logger LOG = LogManager.getLogger(HelloWorld.class);
+
   @Context
   private ContainerRequest req;
 
@@ -35,20 +35,48 @@ public class HelloWorld implements Hello {
   @Override
   @Authenticated
   public PostHelloResponse postHello(HelloPostRequest entity) {
+    return handleHello(entity,
+        PostHelloResponse::respond200WithApplicationJson,
+        PostHelloResponse::respond500WithApplicationJson);
+  }
+
+  @Override
+  @Authenticated(allowGuests = true)
+  public PostHelloAllowGuestsResponse postHelloAllowGuests(HelloPostRequest entity) {
+    return handleHello(entity,
+        PostHelloAllowGuestsResponse::respond200WithApplicationJson,
+        PostHelloAllowGuestsResponse::respond500WithApplicationJson);
+  }
+
+  @Override
+  @Authenticated(adminOverride = Authenticated.AdminOverrideOption.ALLOW_ALWAYS)
+  public PostHelloUserOverrideResponse postHelloUserOverride(HelloPostRequest entity) {
+    return handleHello(entity,
+        PostHelloUserOverrideResponse::respond200WithApplicationJson,
+        PostHelloUserOverrideResponse::respond500WithApplicationJson);
+  }
+
+  private <T> T handleHello(HelloPostRequest entity,
+    Function<HelloPostResponse,T> successResponse, Function<ServerError,T> errorResponse) {
+
+    // find the person to be greeted
+    String target = Optional.ofNullable(entity.getGreet()).orElse("World");
+    String sender = UserProvider.lookupUser(req).map(User::getFirstName).orElse("God");
 
     // demonstrate how to handle unknown request property types
     Object config = entity.getConfig();
-    LOG.info("config object is " + config.getClass().getName());
-    if (config instanceof List<?> list) {
-      for (int i = 0; i < list.size(); i++) {
-        LOG.info("config[" + i + "] is " + list.get(i).getClass().getName());
-      }
-    }
-    else if (config instanceof Map<?,?> map) {
-      int i = 0;
-      for (Map.Entry<?,?> entry : map.entrySet()) {
-        LOG.info("config entry " + i + ": key is " + entry.getKey().getClass().getName() + ", value is " + entry.getValue().getClass().getName());
-        i++;
+    if (config != null) {
+      LOG.info("config object is " + config.getClass().getName());
+      if (config instanceof List<?> list) {
+        for (int i = 0; i < list.size(); i++) {
+          LOG.info("config[" + i + "] is " + list.get(i).getClass().getName());
+        }
+      } else if (config instanceof Map<?, ?> map) {
+        int i = 0;
+        for (Map.Entry<?, ?> entry : map.entrySet()) {
+          LOG.info("config entry " + i + ": key is " + entry.getKey().getClass().getName() + ", value is " + entry.getValue().getClass().getName());
+          i++;
+        }
       }
     }
 
@@ -56,15 +84,19 @@ public class HelloWorld implements Hello {
     var rand = new Random();
     if (rand.nextInt(4) == 2) {
       var out = new ServerErrorImpl();
-      out.setMessage("Whoops!");
-      return PostHelloResponse.respond500WithApplicationJson(out);
+      out.setMessage("Whoops!  Occasionally we throw an error for fun.  Please try again.");
+      return errorResponse.apply(out);
     }
 
     var out = new HelloPostResponseImpl();
-    out.setMessage(String.format("Hello %s!", UserProvider.lookupUser(req)
-      .map(User::getFirstName)
-      .orElse("you")));
+    out.setMessage(String.format("Hello %s from %s!", target, sender));
+    return successResponse.apply(out);
 
-    return PostHelloResponse.respond200WithApplicationJson(out);
+  }
+
+  @Override
+  @AdminRequired
+  public GetHelloAdminOnlyResponse getHelloAdminOnly() {
+    return GetHelloAdminOnlyResponse.respond204();
   }
 }

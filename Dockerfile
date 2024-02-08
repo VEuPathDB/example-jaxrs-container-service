@@ -5,7 +5,7 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 FROM veupathdb/alpine-dev-base:jdk-18 AS prep
 
-LABEL service="demo-service-build"
+LABEL service="example-service-build"
 
 ARG GITHUB_USERNAME
 ARG GITHUB_TOKEN
@@ -13,7 +13,7 @@ ARG GITHUB_TOKEN
 WORKDIR /workspace
 
 RUN jlink --compress=2 --module-path /opt/jdk/jmods \
-       --add-modules java.base,java.logging,java.xml,java.desktop,java.management,java.sql,java.naming \
+       --add-modules java.base,java.logging,java.xml,java.desktop,java.management,java.sql,java.naming,java.security.jgss,jdk.management \
        --output /jlinked \
     && apk add --no-cache git sed findutils coreutils make npm curl gawk jq \
     && git config --global advice.detachedHead false
@@ -55,7 +55,7 @@ RUN ./gradlew clean test shadowJar
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 FROM alpine:3.16
 
-LABEL service="demo-service"
+LABEL service="example-service"
 
 RUN apk add --no-cache tzdata \
     && cp /usr/share/zoneinfo/America/New_York /etc/localtime \

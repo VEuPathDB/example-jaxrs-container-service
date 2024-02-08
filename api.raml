@@ -53,3 +53,44 @@ securitySchemes:
         body:
           application/json:
             type: error.ServerError
+
+  /allow-guests:
+    displayName: Hello World, allow guests
+    post:
+      securedBy: header-auth
+      body:
+        application/json:
+          type: lib.HelloPostRequest
+      responses:
+        200:
+          body:
+            application/json:
+              type: lib.HelloPostResponse
+        500:
+          body:
+            application/json:
+              type: error.ServerError
+
+  /user-override:
+    displayName: Hello World with admin override
+    post:
+      securedBy: header-auth
+      body:
+        application/json:
+          type: lib.HelloPostRequest
+      responses:
+        200:
+          body:
+            application/json:
+              type: lib.HelloPostResponse
+        500:
+          body:
+            application/json:
+              type: error.ServerError
+
+  /admin-only:
+    displayName: Admin-only endpoint
+    get:
+      securedBy: header-auth
+      responses:
+        204:
