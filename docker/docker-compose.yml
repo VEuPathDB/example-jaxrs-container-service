@@ -43,7 +43,7 @@ services:
       ORACLE_BASE_DN: ${ORACLE_BASE_DN}
 
       # OAuth URL for authentication
-      OAUTH_URL: ${OAUTH_URL:-https://integrate.eupathdb.org/oauth}
+      OAUTH_URL: ${OAUTH_URL:-https://eupathdb.org/oauth}
 
       # LDAP Net Service Name for the account database
       ACCT_DB_TNS_NAME: ${ACCT_DB_TNS_NAME}
