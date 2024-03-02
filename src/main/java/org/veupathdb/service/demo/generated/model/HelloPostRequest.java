@@ -13,6 +13,12 @@ public interface HelloPostRequest {
   @JsonProperty("greet")
   void setGreet(String greet);
 
+  @JsonProperty("userId")
+  Long getUserId();
+
+  @JsonProperty("userId")
+  void setUserId(Long userId);
+
   @JsonProperty("config")
   Object getConfig();
 

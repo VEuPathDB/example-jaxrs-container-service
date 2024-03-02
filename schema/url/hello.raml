@@ -16,6 +16,12 @@ types:
       greet:
         description: Who do you want to say hello to?
         type: string
+        required: false
+      userId:
+        description: What is the user ID of the person you want to say hello to?
+        type: integer
+        format: int64
+        required: false
       config:
         description: sample use of unknown/undefined property type
         type: object

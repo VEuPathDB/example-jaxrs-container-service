@@ -7,11 +7,15 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
     "greet",
+    "userId",
     "config"
 })
 public class HelloPostRequestImpl implements HelloPostRequest {
   @JsonProperty("greet")
   private String greet;
+
+  @JsonProperty("userId")
+  private Long userId;
 
   @JsonProperty("config")
   private Object config;
@@ -24,6 +28,16 @@ public class HelloPostRequestImpl implements HelloPostRequest {
   @JsonProperty("greet")
   public void setGreet(String greet) {
     this.greet = greet;
+  }
+
+  @JsonProperty("userId")
+  public Long getUserId() {
+    return this.userId;
+  }
+
+  @JsonProperty("userId")
+  public void setUserId(Long userId) {
+    this.userId = userId;
   }
 
   @JsonProperty("config")
