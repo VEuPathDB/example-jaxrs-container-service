@@ -81,7 +81,7 @@ configurations.all {
 dependencies {
 
   // Core lib
-  implementation("org.veupathdb.lib:jaxrs-container-core:7.0.0-beta2")
+  implementation("org.veupathdb.lib:jaxrs-container-core:7.0.0")
 
   // Jersey
   implementation("org.glassfish.jersey.core:jersey-server:3.1.1")
