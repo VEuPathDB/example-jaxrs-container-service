@@ -42,9 +42,6 @@ services:
       # LdapTnsNames.
       ORACLE_BASE_DN: ${ORACLE_BASE_DN}
 
-      # OAuth URL for authentication
-      OAUTH_URL: ${OAUTH_URL:-https://eupathdb.org/oauth}
-
       # LDAP Net Service Name for the account database
       ACCT_DB_TNS_NAME: ${ACCT_DB_TNS_NAME}
 
@@ -62,6 +59,11 @@ services:
 
       # Admin Auth Token (special value used to access admin endpoints on this service)
       ADMIN_AUTH_TOKEN: ${ADMIN_AUTH_TOKEN}
+
+      # OAuth Config for User Authentication/Authorization
+      OAUTH_URL: ${OAUTH_URL:-https://eupathdb.org/oauth}
+      OAUTH_CLIENT_ID: ${OAUTH_CLIENT_ID:-veupathdbService}
+      OAUTH_CLIENT_SECRET: ${OAUTH_CLIENT_SECRET}
 
     # The labels section defines additional metadata used by ops tooling to
     # assist in managing this service.
