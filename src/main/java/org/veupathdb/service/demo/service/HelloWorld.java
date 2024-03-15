@@ -4,6 +4,7 @@ import jakarta.ws.rs.core.Context;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.glassfish.jersey.server.ContainerRequest;
+import org.gusdb.oauth2.client.veupathdb.OAuthQuerier;
 import org.veupathdb.lib.container.jaxrs.model.User;
 import org.veupathdb.lib.container.jaxrs.providers.UserProvider;
 import org.veupathdb.lib.container.jaxrs.server.annotations.AdminRequired;
@@ -60,7 +61,15 @@ public class HelloWorld implements Hello {
     Function<HelloPostResponse,T> successResponse, Function<ServerError,T> errorResponse) {
 
     // find the person to be greeted
-    String target = Optional.ofNullable(entity.getGreet()).orElse("World");
+    String target = entity.getGreet();
+    if (target == null) {
+      Long userId = entity.getUserId();
+      target = userId == null ? "World" :
+          Optional.ofNullable(UserProvider.getUsersById(List.of(userId)).get(userId))
+            .map(User::getFirstName).orElse("Unknown User");
+    }
+
+    // find the sender (authenticated user or God)
     String sender = UserProvider.lookupUser(req).map(User::getFirstName).orElse("God");
 
     // demonstrate how to handle unknown request property types
