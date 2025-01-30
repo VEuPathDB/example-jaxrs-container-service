@@ -4,7 +4,6 @@ import jakarta.ws.rs.core.Context;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.glassfish.jersey.server.ContainerRequest;
-import org.gusdb.oauth2.client.veupathdb.OAuthQuerier;
 import org.veupathdb.lib.container.jaxrs.model.User;
 import org.veupathdb.lib.container.jaxrs.providers.UserProvider;
 import org.veupathdb.lib.container.jaxrs.server.annotations.AdminRequired;

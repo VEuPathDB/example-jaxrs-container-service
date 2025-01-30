@@ -1,8 +1,9 @@
 import org.veupathdb.lib.gradle.container.util.Logger.Level
+import org.gradle.api.JavaVersion
 
 plugins {
   java
-  id("org.veupathdb.lib.gradle.container.container-utils") version "4.8.10"
+  id("org.veupathdb.lib.gradle.container.container-utils") version "5.0.4"
   id("com.github.johnrengelman.shadow") version "7.1.2"
 }
 
@@ -47,9 +48,8 @@ containerBuild {
 }
 
 java {
-  toolchain {
-    languageVersion.set(JavaLanguageVersion.of(17))
-  }
+  sourceCompatibility = JavaVersion.VERSION_21
+  targetCompatibility = JavaVersion.VERSION_21
 }
 
 tasks.shadowJar {
@@ -81,25 +81,25 @@ configurations.all {
 dependencies {
 
   // Core lib
-  implementation("org.veupathdb.lib:jaxrs-container-core:7.0.1")
+  implementation("org.veupathdb.lib:jaxrs-container-core:8.0.0")
 
   // Jersey
-  implementation("org.glassfish.jersey.core:jersey-server:3.1.1")
+  implementation("org.glassfish.jersey.core:jersey-server:3.1.10")
 
   // Jackson
-  implementation("com.fasterxml.jackson.core:jackson-databind:2.15.3")
-  implementation("com.fasterxml.jackson.core:jackson-annotations:2.15.3")
+  implementation("com.fasterxml.jackson.core:jackson-databind:2.18.2")
+  implementation("com.fasterxml.jackson.core:jackson-annotations:2.18.2")
 
   // Log4J
-  implementation("org.apache.logging.log4j:log4j-api:2.20.0")
-  implementation("org.apache.logging.log4j:log4j-core:2.20.0")
+  implementation("org.apache.logging.log4j:log4j-api:2.24.3")
+  implementation("org.apache.logging.log4j:log4j-core:2.24.3")
 
   // Metrics (can remove if not adding custom service metrics over those provided by container core)
   implementation("io.prometheus:simpleclient:0.16.0")
   implementation("io.prometheus:simpleclient_common:0.16.0")
 
   // Unit Testing
-  testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
-  testImplementation("org.mockito:mockito-core:5.2.0")
-  testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.2")
+  testImplementation("org.junit.jupiter:junit-jupiter-api:5.11.4")
+  testImplementation("org.mockito:mockito-core:5.15.2")
+  testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.11.4")
 }

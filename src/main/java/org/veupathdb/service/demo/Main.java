@@ -7,8 +7,11 @@ import org.veupathdb.lib.container.jaxrs.server.Server;
 public class Main extends Server {
   public static void main(String[] args) {
     var server = new Main();
-    server.enableAccountDB();
+
+    // enables looking up user details from the OAuth server.
     server.enableUserQuerying();
+
+    // Starts the HTTP server.
     server.start(args);
   }
 
@@ -16,7 +19,8 @@ public class Main extends Server {
   protected ContainerResources newResourceConfig(Options options) {
     final var out =  new Resources(options);
 
-    // turns on AuthFilter, which provides authenticated users and admin checks on requests
+    // turns on AuthFilter, which provides authenticated users and admin checks
+    // on requests
     out.enableAuth();
 
     // Enabled by default for debugging purposes, this should be removed when
