@@ -3,49 +3,34 @@
 #   Build Service & Dependencies
 #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-FROM veupathdb/alpine-dev-base:jdk-18 AS prep
-
-LABEL service="example-service-build"
+FROM veupathdb/alpine-dev-base:jdk23-gradle8.11 AS prep
 
 ARG GITHUB_USERNAME
 ARG GITHUB_TOKEN
 
 WORKDIR /workspace
 
-RUN jlink --compress=2 --module-path /opt/jdk/jmods \
-       --add-modules java.base,java.logging,java.xml,java.desktop,java.management,java.sql,java.naming,java.security.jgss,jdk.management,jdk.crypto.ec \
-       --output /jlinked \
-    && apk add --no-cache git sed findutils coreutils make npm curl gawk jq \
-    && git config --global advice.detachedHead false
-
-RUN npm install -gs raml2html raml2html-modern-theme
-
-ENV DOCKER=build
-
-# download gradle
-COPY gradlew ./
-COPY gradle gradle
-RUN bash -c 'echo "\n\n" | ./gradlew init --type basic --dsl kotlin --no-daemon'
+RUN apk add --no-cache npm \
+  && npm install -gs raml2html raml2html-modern-theme
 
 # copy files required to build dev environment and fetch dependencies
 COPY build.gradle.kts settings.gradle.kts ./
 
 # download raml tools (these never change)
-RUN ./gradlew install-raml-merge install-raml-4-jax-rs
-
+RUN gradle install-raml-4-jax-rs install-raml-merge
 # download project dependencies in advance
-RUN ./gradlew download-dependencies
+RUN gradle download-dependencies
 
 # copy raml over for merging, then perform code and documentation generation
 COPY api.raml ./
 COPY schema schema
-RUN ./gradlew generate-jaxrs generate-raml-docs
+RUN gradle generate-jaxrs generate-raml-docs
 
 # copy remaining files
-COPY . .
+COPY src/ src
 
 # build the project
-RUN ./gradlew clean test shadowJar
+RUN gradle clean test shadowJar
 
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -53,7 +38,7 @@ RUN ./gradlew clean test shadowJar
 #   Run the service
 #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-FROM alpine:3.16
+FROM amazoncorretto:23.0.2-alpine3.21
 
 LABEL service="example-service"
 
@@ -66,8 +51,6 @@ ENV JAVA_HOME=/opt/jdk \
     JVM_MEM_ARGS="-Xms32M -Xmx256M" \
     JVM_ARGS=""
 
-COPY --from=prep /jlinked /opt/jdk
-COPY --from=prep /usr/lib/jvm/default-jvm/lib/security/cacerts /opt/jdk/lib/security/cacerts
 COPY --from=prep /workspace/build/libs/service.jar /service.jar
 
 # Add this for full SSL logging: -Djavax.net.debug=all
