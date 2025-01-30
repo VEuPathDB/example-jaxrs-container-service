@@ -90,5 +90,7 @@ through the use of a `.env` file.
 
 TODO
 
+Run `make` in the project directory to see available make targets.
 
+Run `./gradlew tasks` to see available gradle tasks.
 
