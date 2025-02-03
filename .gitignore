@@ -12,14 +12,15 @@
 *.bak
 *.swp
 *.jar
+!gradle-wrapper.jar
 
 local.properties
 .loadpath
 .recommenders
 
-!gradle-wrapper.jar
 /run.sh
 *.env
+!/example.env
 
 .classpath
 .project
