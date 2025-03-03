@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
     property = "status"
 )
 @JsonSubTypes({
+    @JsonSubTypes.Type(org.veupathdb.service.demo.generated.model.ConflictError.class),
     @JsonSubTypes.Type(org.veupathdb.service.demo.generated.model.ServerError.class),
     @JsonSubTypes.Type(org.veupathdb.service.demo.generated.model.ForbiddenError.class),
     @JsonSubTypes.Type(org.veupathdb.service.demo.generated.model.UnprocessableEntityError.class),
@@ -18,6 +19,8 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
     @JsonSubTypes.Type(org.veupathdb.service.demo.generated.model.BadRequestError.class),
     @JsonSubTypes.Type(org.veupathdb.service.demo.generated.model.UnauthorizedError.class),
     @JsonSubTypes.Type(org.veupathdb.service.demo.generated.model.MethodNotAllowedError.class),
+    @JsonSubTypes.Type(org.veupathdb.service.demo.generated.model.GoneError.class),
+    @JsonSubTypes.Type(org.veupathdb.service.demo.generated.model.FailedDependencyError.class),
     @JsonSubTypes.Type(org.veupathdb.service.demo.generated.model.Error.class)
 })
 @JsonDeserialize(

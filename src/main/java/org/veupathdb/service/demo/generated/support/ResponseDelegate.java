@@ -60,24 +60,8 @@ public class ResponseDelegate extends Response {
   }
 
   @Override
-  public Link.Builder getLinkBuilder(String p0) {
-    return this.delegate.getLinkBuilder(p0);
-  }
-
-  @Override
-  public MultivaluedMap<String, Object> getMetadata() {
-    return this.delegate.getMetadata();
-  }
-
-  @Override
-  public MultivaluedMap<String, String> getStringHeaders() {
-    return this.delegate.getStringHeaders();
-  }
-
-  @Override
-  public String getHeaderString(String p0) {
-    return this.delegate.getHeaderString(p0);
-  }
+  public Object getEntity() {
+    return this.entity;}
 
   @Override
   public int getStatus() {
@@ -90,13 +74,13 @@ public class ResponseDelegate extends Response {
   }
 
   @Override
-  public <T> T readEntity(Class<T> p0) {
-    return this.delegate.readEntity(p0);
+  public <T> T readEntity(GenericType<T> p0, Annotation[] p1) {
+    return this.delegate.readEntity(p0,p1);
   }
 
   @Override
-  public <T> T readEntity(GenericType<T> p0, Annotation[] p1) {
-    return this.delegate.readEntity(p0,p1);
+  public <T> T readEntity(Class<T> p0) {
+    return this.delegate.readEntity(p0);
   }
 
   @Override
@@ -155,8 +139,24 @@ public class ResponseDelegate extends Response {
   }
 
   @Override
-  public Object getEntity() {
-    return this.entity;}
+  public Link.Builder getLinkBuilder(String p0) {
+    return this.delegate.getLinkBuilder(p0);
+  }
+
+  @Override
+  public MultivaluedMap<String, Object> getMetadata() {
+    return this.delegate.getMetadata();
+  }
+
+  @Override
+  public MultivaluedMap<String, String> getStringHeaders() {
+    return this.delegate.getStringHeaders();
+  }
+
+  @Override
+  public String getHeaderString(String p0) {
+    return this.delegate.getHeaderString(p0);
+  }
 
   @Override
   public MultivaluedMap<String, Object> getHeaders() {

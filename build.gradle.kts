@@ -81,7 +81,7 @@ configurations.all {
 dependencies {
 
   // Core lib
-  implementation("org.veupathdb.lib:jaxrs-container-core:8.0.0")
+  implementation("org.veupathdb.lib:jaxrs-container-core:9.1.0")
 
   // Jersey
   implementation("org.glassfish.jersey.core:jersey-server:3.1.10")
@@ -99,7 +99,7 @@ dependencies {
   implementation("io.prometheus:simpleclient_common:0.16.0")
 
   // Unit Testing
-  testImplementation("org.junit.jupiter:junit-jupiter-api:5.11.4")
+  testImplementation("org.junit.jupiter:junit-jupiter-api:5.12.0")
   testImplementation("org.mockito:mockito-core:5.15.2")
-  testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.11.4")
+  testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.12.0")
 }

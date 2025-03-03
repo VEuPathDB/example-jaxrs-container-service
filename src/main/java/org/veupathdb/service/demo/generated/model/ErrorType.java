@@ -18,8 +18,17 @@ public enum ErrorType {
   @JsonProperty("bad-method")
   BADMETHOD("bad-method"),
 
+  @JsonProperty("conflict")
+  CONFLICT("conflict"),
+
+  @JsonProperty("gone")
+  GONE("gone"),
+
   @JsonProperty("invalid-input")
   INVALIDINPUT("invalid-input"),
+
+  @JsonProperty("failed-dependency")
+  FAILEDDEPENDENCY("failed-dependency"),
 
   @JsonProperty("server-error")
   SERVERERROR("server-error");

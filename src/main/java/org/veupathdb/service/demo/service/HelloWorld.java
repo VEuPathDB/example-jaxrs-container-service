@@ -4,7 +4,7 @@ import jakarta.ws.rs.core.Context;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.glassfish.jersey.server.ContainerRequest;
-import org.veupathdb.lib.container.jaxrs.model.User;
+import org.veupathdb.lib.container.jaxrs.model.UserInfo;
 import org.veupathdb.lib.container.jaxrs.providers.UserProvider;
 import org.veupathdb.lib.container.jaxrs.server.annotations.AdminRequired;
 import org.veupathdb.lib.container.jaxrs.server.annotations.Authenticated;
@@ -65,11 +65,11 @@ public class HelloWorld implements Hello {
       Long userId = entity.getUserId();
       target = userId == null ? "World" :
           Optional.ofNullable(UserProvider.getUsersById(List.of(userId)).get(userId))
-            .map(User::getFirstName).orElse("Unknown User");
+            .map(UserInfo::getFirstName).orElse("Unknown User");
     }
 
     // find the sender (authenticated user or God)
-    String sender = UserProvider.lookupUser(req).map(User::getFirstName).orElse("God");
+    String sender = UserProvider.lookupUser(req).map(UserInfo::getFirstName).orElse("God");
 
     // demonstrate how to handle unknown request property types
     Object config = entity.getConfig();
