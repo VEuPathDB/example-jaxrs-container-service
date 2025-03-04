@@ -3,7 +3,7 @@ import org.gradle.api.JavaVersion
 
 plugins {
   java
-  id("org.veupathdb.lib.gradle.container.container-utils") version "5.0.4"
+  id("org.veupathdb.lib.gradle.container.container-utils") version "5.0.5"
   id("com.github.johnrengelman.shadow") version "7.1.2"
 }
 
